@@ -12,8 +12,12 @@ public class ProductService {
 //        this.productRepository = productRepository;
 //    }
 
-    public void registerProduct(Product product) {
-        productRepository.save(product);
+    public Product registerProduct(Product product) {
         System.out.println("/products : service - " + product.getName());
+        return productRepository.save(product);
+    }
+
+    public Product findProduct(int id) {
+        return productRepository.findProduct(id);   // Controller로 돌려줘야 하니까 return
     }
 }
