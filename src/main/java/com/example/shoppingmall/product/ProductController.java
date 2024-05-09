@@ -3,6 +3,8 @@ package com.example.shoppingmall.product;
 import com.example.shoppingmall.utils.Validator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.regex.Pattern;
@@ -22,20 +24,23 @@ public class ProductController {
 
     // 상품 개별 등록
     @PostMapping("/products")
-    public String registerProduct(@RequestBody Product product) {
+    public ResponseEntity registerProduct(@RequestBody Product product) {
         // 유효성 검사: name(영어), price(숫자)
         // 1) 조건문
         if (Validator.isAlpha(product.getName()) && Validator.isNumber(product.getPrice())) {
             System.out.println("/products : controller - " + product.getName());
             Product savedProduct = productService.registerProduct(product);
 
-            if (savedProduct == null)
-                return "등록 실패!";
+            // TODO NPE 처리 (try-catch)
+            try {
+                System.out.println(savedProduct.getName());
+            } catch (NullPointerException e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 or 404(NOT_FOUND)
+            }
 
-            System.out.println(savedProduct.getName());
-            return "등록 성공!";
+            return new ResponseEntity<>(HttpStatus.CREATED);  // 201
         } else {
-            return "name 또는 price가 형식에 맞지 않습니다.";
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // 400
         }
     }
 

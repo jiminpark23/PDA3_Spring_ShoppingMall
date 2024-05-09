@@ -1,5 +1,6 @@
 package com.example.shoppingmall.product;
 
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

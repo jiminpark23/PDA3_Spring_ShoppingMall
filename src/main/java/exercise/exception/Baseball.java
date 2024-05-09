@@ -1,4 +1,4 @@
-package exercise;
+package exercise.exception;
 
 import com.example.shoppingmall.utils.Validator;
 

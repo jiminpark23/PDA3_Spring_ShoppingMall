@@ -1,7 +1,4 @@
-package exercise;
-import java.util.Scanner;
-
-import static exercise.ArithmeticEx.divide;
+package exercise.exception;
 
 public class ArithmeticThrows {
     public static void main(String[] args) {
