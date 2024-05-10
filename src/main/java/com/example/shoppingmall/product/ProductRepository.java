@@ -30,10 +30,33 @@ public class ProductRepository {
             // limit = 4 / currentPage 2 => 4~7
             // 시작 인덱스를 구해라! => limit * (currentPage - 1)
 
+
         return product_table.values().stream().toList();
+    }
+
+    public List<Product> findProducts(int limit, int currentPage, int categoryId) {
+        List<Product> resultProducts = new ArrayList<>();
+
+        for (Product product: product_table.values()) {
+            if (product.getCategoryId() == categoryId)
+                resultProducts.add(product);
+        }
+
+        //return product_table.values().stream().filter(product -> product.getCategoryId() == categoryId).toList();
+        return resultProducts;
     }
 
     public Product findProduct(int id) {
         return product_table.get(id);   // service에게 다시 돌려주기 위해 return
+    }
+
+    public void deleteProduct(int id) {
+        product_table.remove(id);
+    }
+
+    public void deleteProducts(List<Integer> productIds) {
+        for(int i=0; i<productIds.size(); i++) {
+            product_table.remove(productIds.get(i));
+        }
     }
 }
