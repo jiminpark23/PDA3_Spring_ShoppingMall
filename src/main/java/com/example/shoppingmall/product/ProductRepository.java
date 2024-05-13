@@ -1,6 +1,5 @@
 package com.example.shoppingmall.product;
 
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,17 +9,17 @@ import java.util.Map;
 
 @Repository
 public class ProductRepository {
-    Map<Integer, Product> product_table = new HashMap<>();
+    Map<Integer, Product> productTable = new HashMap<>();
 
     int id = 0;
 
     public Product save(Product product) {
         // id값이 1로 픽스되어 있어서 save 덮어쓰기 -> autoIncrement를 직접 구현
         product.setId(id++);  // id값도 같이 저장하기 위해 세팅
-        product_table.put(product.getId(), product);
-        System.out.println("/products : repository - " + product_table.get(id-1));
+        productTable.put(product.getId(), product);
+        System.out.println("/products : repository - " + productTable.get(id-1));
 
-        return product_table.get(id-1);
+        return productTable.get(id-1);
     }
 
     public List<Product> findProducts(int limit, int currentPage) {
@@ -31,13 +30,13 @@ public class ProductRepository {
             // 시작 인덱스를 구해라! => limit * (currentPage - 1)
 
 
-        return product_table.values().stream().toList();
+        return productTable.values().stream().toList();
     }
 
     public List<Product> findProducts(int limit, int currentPage, int categoryId) {
         List<Product> resultProducts = new ArrayList<>();
 
-        for (Product product: product_table.values()) {
+        for (Product product: productTable.values()) {
             if (product.getCategoryId() == categoryId)
                 resultProducts.add(product);
         }
@@ -47,16 +46,16 @@ public class ProductRepository {
     }
 
     public Product findProduct(int id) {
-        return product_table.get(id);   // service에게 다시 돌려주기 위해 return
+        return productTable.get(id);   // service에게 다시 돌려주기 위해 return
     }
 
     public void deleteProduct(int id) {
-        product_table.remove(id);
+        productTable.remove(id);
     }
 
     public void deleteProducts(List<Integer> productIds) {
         for(int i=0; i<productIds.size(); i++) {
-            product_table.remove(productIds.get(i));
+            productTable.remove(productIds.get(i));
         }
     }
 }
