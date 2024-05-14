@@ -19,4 +19,16 @@ public class Member {
     private String name;
     private String email;
     private String contact;
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", pw='" + pw + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", contact='" + contact + '\'' +
+                '}';
+    }
 }

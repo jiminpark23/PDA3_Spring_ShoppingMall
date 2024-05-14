@@ -9,15 +9,22 @@ public class MemberService {
     MemberRepository memberRepository;
 
 
-    public String signup(Member member) {
+    public String join(Member member) {
         return memberRepository.save(member);
+    }
+
+    public boolean checkDuplicateId(String userId) {
+        Member existMember = memberRepository.findById(userId);
+
+        if (existMember == null)
+            return false;
+        else
+            return true;
     }
 
     public void login(String userId, String pw) {
         memberRepository.login(userId, pw);
     }
 
-    public boolean checkDuplicateId(String userId) {
-        return memberRepository.findById(userId);
-    }
+
 }
