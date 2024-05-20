@@ -56,22 +56,21 @@ public class MemberController {
         return memberService.checkDuplicateId(memberDTO.getUserId());
     }
 
-    // 유효성 검사하다가 에러가 터지면 호출되는 예외 처리 메소드
-    @ExceptionHandler//(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiUtils.ApiResult<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException errors) {
-
-        Map<String, String> errorMessages = new HashMap<>();
-
-        for (FieldError error : errors.getFieldErrors()) {
-            String errorField = error.getField(); // 예외 field명
-            String errorMessage = error.getDefaultMessage(); // 예외 message
-            errorMessages.put(errorField, errorMessage);
-        }
-
-        return error(errorMessages, HttpStatus.BAD_REQUEST);
-    }
-
+//    // 유효성 검사하다가 에러가 터지면 호출되는 예외 처리 메소드
+//    @ExceptionHandler//(MethodArgumentNotValidException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public ApiUtils.ApiResult<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException errors) {
+//
+//        Map<String, String> errorMessages = new HashMap<>();
+//
+//        for (FieldError error : errors.getFieldErrors()) {
+//            String errorField = error.getField(); // 예외 field명
+//            String errorMessage = error.getDefaultMessage(); // 예외 message
+//            errorMessages.put(errorField, errorMessage);
+//        }
+//
+//        return error(errorMessages, HttpStatus.BAD_REQUEST);
+//    }
 
     @PostMapping("/check")
     public ResponseEntity<String> checkDuplicateId(@RequestBody Member member) {
