@@ -14,6 +14,7 @@ import lombok.ToString;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @AllArgsConstructor
 public class Member {
+    private int id; // PK
 //    @JsonProperty("user_id")
     private String userId;
     private String pw;
@@ -21,8 +22,17 @@ public class Member {
     private String email;
     private String contact;
 
-//    public static Member fromDtoToEntity(MemberDTO memberDTO) {
+    public Member(String userId, String pw, String name, String email, String contact) {
+        this.userId = userId;
+        this.pw = pw;
+        this.name = name;
+        this.email = email;
+        this.contact = contact;
+    }
+
+    //    public static Member fromDtoToEntity(MemberDTO memberDTO) {
 //        return new Member(
+//                memberDTO.getId(),
 //                memberDTO.getUserId(),
 //                memberDTO.getPw(),
 //                memberDTO.getName(),

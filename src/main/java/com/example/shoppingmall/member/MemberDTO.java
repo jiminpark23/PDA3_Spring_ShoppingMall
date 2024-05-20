@@ -8,6 +8,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberDTO {
+//     MemberRequestDto, MemberResponseDto
+//     SignUpReqDto, SignUpResDto
+//     LoginReqDto, LoginResDto
+    private int id;
+
     @JsonProperty("user_id")
     @NotBlank(message = "아이디는 필수 입력입니다.")
     @Pattern(regexp = "^[a-z0-9_-]{3,10}", message = "아이디는 영문과 숫자가 포함된 3~10자의 아이디여야 합니다.")
@@ -28,6 +33,7 @@ public class MemberDTO {
 
     public Member convertToEntity() {
         return new Member(
+                id,
                 userId,
                 pw,
                 name,
