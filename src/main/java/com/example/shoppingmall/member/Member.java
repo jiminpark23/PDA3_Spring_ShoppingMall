@@ -3,6 +3,7 @@ package com.example.shoppingmall.member;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,8 +12,8 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@AllArgsConstructor
 public class Member {
-    private int id;
 //    @JsonProperty("user_id")
     private String userId;
     private String pw;
@@ -20,10 +21,19 @@ public class Member {
     private String email;
     private String contact;
 
+//    public static Member fromDtoToEntity(MemberDTO memberDTO) {
+//        return new Member(
+//                memberDTO.getUserId(),
+//                memberDTO.getPw(),
+//                memberDTO.getName(),
+//                memberDTO.getEmail(),
+//                memberDTO.getContact()
+//        );
+//    }
+
     @Override
     public String toString() {
         return "Member{" +
-                "id=" + id +
                 ", userId='" + userId + '\'' +
                 ", pw='" + pw + '\'' +
                 ", name='" + name + '\'' +
