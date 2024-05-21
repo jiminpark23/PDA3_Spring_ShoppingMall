@@ -3,6 +3,8 @@ package com.example.shoppingmall.member;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,10 +12,11 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Entity
+//@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @AllArgsConstructor
 public class Member {
+    @Id
     private int id; // PK
 //    @JsonProperty("user_id")
     private String userId;

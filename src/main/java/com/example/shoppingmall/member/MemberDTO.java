@@ -24,7 +24,7 @@ public class MemberDTO {
     @NotBlank(message = "이름은 필수 입력입니다.")
     private String name;
 //    @Email
-    @Pattern(regexp = "^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]$", message = "올바른 이메일 형식이 아닙니다.")
+    @Pattern(regexp = "^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$", message = "올바른 이메일 형식이 아닙니다.")
     @NotBlank(message = "이메일은 필수 입력입니다.")
     private String email;
     @NotBlank(message = "연락처는 필수 입력입니다.")

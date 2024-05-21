@@ -25,6 +25,11 @@ import static com.example.shoppingmall.utils.ApiUtils.success;
 public class MemberController {
     MemberService memberService;
 
+    @PostMapping("/database")
+    public void makeConnection() {
+        memberService.makeConnection();
+    }
+
     @PostMapping("/join")
     public ApiUtils.ApiResult join(@Valid @RequestBody MemberDTO memberDTO) {  //, Errors errors) {
 

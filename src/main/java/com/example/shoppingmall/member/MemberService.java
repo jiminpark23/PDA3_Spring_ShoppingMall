@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 public class MemberService {
     MemberRepository memberRepository;
 
+    public void makeConnection() {
+        memberRepository.makeConnection();
+    }
 
     public String join(Member member) {
         return memberRepository.save(member);
