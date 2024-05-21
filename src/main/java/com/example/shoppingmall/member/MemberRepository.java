@@ -1,16 +1,12 @@
 package com.example.shoppingmall.member;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,21 +23,29 @@ public class MemberRepository {
         DataSourceUtils.getConnection(dataSource);
     }
 
-    @Transactional
-    public String save(Member member) {
+    public void save(Member member) {
         entityManager.persist(member);
-//        memberTable.put(member.getUserId(), member);
-//        Member savedMember = memberTable.get(member.getUserId());
-        Member savedMember = entityManager.find(Member.class, member.getId());
-
-        return savedMember.getUserId();
+//        Member savedMember = entityManager.find(Member.class, member.getId());
+//
+//        return savedMember.getUserId();
     }
 
-    public Member findById(String userId) {
-        return memberTable.get(userId);
+    public Member findByUserId(String userId) {
+        String query = "SELECT m FROM member AS m WHERE m.user_id = :userId";
+        Member member = entityManager.createQuery(query, Member.class)
+                                    .setParameter("userId", userId)
+                                    .getSingleResult();
+//        return memberTable.get(userId);
+        return member;
     }
 
-    public void login(String userId, String pw) {
+    public Member findById(int id) {
+        return entityManager.find(Member.class, id);
+    }
 
+
+    @Transactional
+    public Member login(String userId, String pw) {
+        return findByUserId(userId);
     }
 }

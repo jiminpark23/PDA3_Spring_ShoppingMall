@@ -13,10 +13,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-//@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @AllArgsConstructor
 public class Member {
-    @Id
+    @Id // 식별자
     private int id; // PK
 //    @JsonProperty("user_id")
     private String userId;

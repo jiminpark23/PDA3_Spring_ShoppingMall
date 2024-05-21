@@ -53,7 +53,7 @@ public class MemberController {
         // 생성자 이용한 변환
         Member requestMember = memberDTO.convertToEntity();
 
-        String userId = memberService.join(requestMember);
+        String userId = memberService.join(requestMember).getUserId();
         return success(userId);
     }
 
@@ -88,10 +88,10 @@ public class MemberController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody Member member) {
-        memberService.login(member.getUserId(), member.getPw());
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity login(@RequestBody Member member) {
+//        memberService.login(member.getUserId(), member.getPw());
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }

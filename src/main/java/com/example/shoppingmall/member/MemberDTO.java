@@ -11,6 +11,7 @@ public class MemberDTO {
 //     MemberRequestDto, MemberResponseDto
 //     SignUpReqDto, SignUpResDto
 //     LoginReqDto, LoginResDto
+
     private int id;
 
     @JsonProperty("user_id")
