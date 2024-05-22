@@ -3,6 +3,8 @@ package com.example.shoppingmall.product;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,17 +31,18 @@ public class ProductService {
         return productJPARepository.findById(product.getId()).orElseThrow(() -> new NoSuchElementException("Product not found with id: " + product.getId()));
     }
 
-    public List<Product> findProducts(int limit, int currentPage) {
-        return productRepository.findProducts(limit, currentPage);
-    }
-
-    public List<Product> findProducts(int limit, int currentPage, int categoryId) {
-        return productRepository.findProducts(limit, currentPage, categoryId);
-    }
-
     public Product findProduct(int id) {
-
         return productJPARepository.findById(id).orElseThrow(() -> new NoSuchElementException("Product not found with id: " + id));
+    }
+
+    public Page<Product> findProducts(int limit, int currentPage) {
+        PageRequest pageRequest = PageRequest.of(currentPage - 1, limit);
+        return productJPARepository.findAll(pageRequest);
+    }
+
+    public Page<Product> findProducts(int limit, int currentPage, int categoryId) {
+        PageRequest pageRequest = PageRequest.of(currentPage - 1, limit);
+        return productJPARepository.findProductsByCategoryId(categoryId, pageRequest);
     }
 
     public void deleteProduct(int id) {

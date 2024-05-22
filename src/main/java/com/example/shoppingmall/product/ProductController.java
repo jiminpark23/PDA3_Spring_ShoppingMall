@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,11 +63,11 @@ public class ProductController {
 
         // TODO null 체크는 어디서 해야할까?
         if(categoryId == null) {
-            List<Product> products = productService.findProducts(limit, currentPage);
-            return new ResponseEntity<>(products, HttpStatus.OK); // 200
+            Page<Product> products = productService.findProducts(limit, currentPage);
+            return new ResponseEntity<>(products.stream().toList(), HttpStatus.OK); // 200
         } else {
-            List<Product> products = productService.findProducts(limit, currentPage, categoryId);
-            return new ResponseEntity<>(products, HttpStatus.OK); // 200
+            Page<Product> products = productService.findProducts(limit, currentPage, categoryId);
+            return new ResponseEntity<>(products.stream().toList(), HttpStatus.OK); // 200
         }
 
     }

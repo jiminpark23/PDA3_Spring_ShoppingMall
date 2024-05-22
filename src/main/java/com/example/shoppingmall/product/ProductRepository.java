@@ -3,6 +3,8 @@ package com.example.shoppingmall.product;
 import com.example.shoppingmall.member.MemberJPARepository;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -25,28 +27,28 @@ public class ProductRepository {
 //        entityManager.flush();
 //    }
 
-    public List<Product> findProducts(int limit, int currentPage) {
-        // Map -> Stream -> List
-        // limit, currentPage => 상품 id 범위 => DB가 해주는 것
-        // limit = 4 / currentPage 1 => 0~3
-        // limit = 4 / currentPage 2 => 4~7
-        // 시작 인덱스를 구해라! => limit * (currentPage - 1)
+//    public List<Product> findProducts(int limit, int currentPage) {
+//        // Map -> Stream -> List
+//        // limit, currentPage => 상품 id 범위 => DB가 해주는 것
+//        // limit = 4 / currentPage 1 => 0~3
+//        // limit = 4 / currentPage 2 => 4~7
+//        // 시작 인덱스를 구해라! => limit * (currentPage - 1)
+//
+//
+//        return productTable.values().stream().toList();
+//    }
 
-
-        return productTable.values().stream().toList();
-    }
-
-    public List<Product> findProducts(int limit, int currentPage, int categoryId) {
-        List<Product> resultProducts = new ArrayList<>();
-
-        for (Product product: productTable.values()) {
-            if (product.getCategoryId() == categoryId)
-                resultProducts.add(product);
-        }
-
-        //return product_table.values().stream().filter(product -> product.getCategoryId() == categoryId).toList();
-        return resultProducts;
-    }
+//    public List<Product> findProducts(int limit, int currentPage, int categoryId) {
+//        List<Product> resultProducts = new ArrayList<>();
+//
+//        for (Product product: productTable.values()) {
+//            if (product.getCategoryId() == categoryId)
+//                resultProducts.add(product);
+//        }
+//
+//        //return product_table.values().stream().filter(product -> product.getCategoryId() == categoryId).toList();
+//        return resultProducts;
+//    }
 
 //    public Optional<Product> findById(Integer id) {    // findProduct
 //        String jpql = "SELECT p FROM Product p WHERE p.id = :id";
