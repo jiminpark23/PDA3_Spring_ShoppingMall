@@ -53,7 +53,7 @@ public class MemberController {
         // 생성자 이용한 변환
         Member requestMember = memberDTO.convertToEntity();
 
-        String userId = memberService.join(requestMember).getUserId();
+        String userId = memberService.join(requestMember);
         return success(userId);
     }
 

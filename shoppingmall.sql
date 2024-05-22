@@ -8,6 +8,6 @@ CREATE TABLE member (
     user_id VARCHAR(20) NOT NULL,
     pw VARCHAR(20) NOT NULL,
     name VARCHAR(20) NOT NULL,
-    email VARCHAR(20) NOT NULL,
-    contact VARCHAR(20) NOT NULL
+    email VARCHAR(20) NOT NULL UNIQUE,
+    contact VARCHAR(20) NOT NULL UNIQUE
 );

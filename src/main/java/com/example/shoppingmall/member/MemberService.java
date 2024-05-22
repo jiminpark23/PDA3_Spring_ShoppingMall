@@ -8,16 +8,18 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MemberService {
     MemberRepository memberRepository;
+    MemberJPARepository memberJPARepository;
 
     public void makeConnection() {
         memberRepository.makeConnection();
     }
 
     @Transactional
-    public Member join(Member member) {
+    public String join(Member member) {
+
         memberRepository.save(member);
 
-        return memberRepository.findByUserId(member.getUserId());
+        return memberRepository.findByUserId(member.getUserId()).getUserId();
     }
 
     public boolean checkDuplicateId(String userId) {

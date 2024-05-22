@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-public class MemberRepository {
+public class MemberRepository  {
     Map<String, Member> memberTable = new HashMap<>();
     @Autowired
     EntityManager entityManager;
@@ -25,18 +25,19 @@ public class MemberRepository {
 
     public void save(Member member) {
         entityManager.persist(member);
+        entityManager.flush();
 //        Member savedMember = entityManager.find(Member.class, member.getId());
 //
 //        return savedMember.getUserId();
     }
 
     public Member findByUserId(String userId) {
-        String query = "SELECT m FROM member AS m WHERE m.user_id = :userId";
-        Member member = entityManager.createQuery(query, Member.class)
+        String jpql = "SELECT m FROM Member m WHERE m.userId = :userId";
+
+        return entityManager.createQuery(jpql, Member.class)
                                     .setParameter("userId", userId)
                                     .getSingleResult();
 //        return memberTable.get(userId);
-        return member;
     }
 
     public Member findById(int id) {
@@ -44,7 +45,6 @@ public class MemberRepository {
     }
 
 
-    @Transactional
     public Member login(String userId, String pw) {
         return findByUserId(userId);
     }
