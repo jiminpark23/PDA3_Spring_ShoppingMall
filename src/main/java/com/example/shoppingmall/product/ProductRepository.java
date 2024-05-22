@@ -1,33 +1,36 @@
 package com.example.shoppingmall.product;
 
+import com.example.shoppingmall.member.MemberJPARepository;
+import jakarta.persistence.EntityManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.sql.DataSource;
+import java.util.*;
 
 @Repository
 public class ProductRepository {
     Map<Integer, Product> productTable = new HashMap<>();
 
+    @Autowired
+    EntityManager entityManager;
+
+    @Autowired
+    DataSource dataSource;
+
     int id = 0;
 
-    public Product save(Product product) {
-        // id값이 1로 픽스되어 있어서 save 덮어쓰기 -> autoIncrement를 직접 구현
-        product.setId(id++);  // id값도 같이 저장하기 위해 세팅
-        productTable.put(product.getId(), product);
-        System.out.println("/products : repository - " + productTable.get(id-1));
-
-        return productTable.get(id-1);
-    }
+//    public void save(Product product) {
+//        entityManager.persist(product);
+//        entityManager.flush();
+//    }
 
     public List<Product> findProducts(int limit, int currentPage) {
         // Map -> Stream -> List
         // limit, currentPage => 상품 id 범위 => DB가 해주는 것
-            // limit = 4 / currentPage 1 => 0~3
-            // limit = 4 / currentPage 2 => 4~7
-            // 시작 인덱스를 구해라! => limit * (currentPage - 1)
+        // limit = 4 / currentPage 1 => 0~3
+        // limit = 4 / currentPage 2 => 4~7
+        // 시작 인덱스를 구해라! => limit * (currentPage - 1)
 
 
         return productTable.values().stream().toList();
@@ -45,9 +48,15 @@ public class ProductRepository {
         return resultProducts;
     }
 
-    public Product findProduct(int id) {
-        return productTable.get(id);   // service에게 다시 돌려주기 위해 return
-    }
+//    public Optional<Product> findById(Integer id) {    // findProduct
+//        String jpql = "SELECT p FROM Product p WHERE p.id = :id";
+//
+//        List<Product> products = entityManager.createQuery(jpql, Product.class)
+//                            .setParameter("id", id)
+//                            .getResultList();
+//
+//        return products.stream().findFirst();
+//    }
 
     public void deleteProduct(int id) {
         productTable.remove(id);

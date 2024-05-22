@@ -35,8 +35,8 @@ public class MemberRepository  {
         String jpql = "SELECT m FROM Member m WHERE m.userId = :userId";
 
         return entityManager.createQuery(jpql, Member.class)
-                                    .setParameter("userId", userId)
-                                    .getSingleResult();
+                            .setParameter("userId", userId)
+                            .getSingleResult();
 //        return memberTable.get(userId);
     }
 

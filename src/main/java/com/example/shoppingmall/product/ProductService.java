@@ -1,9 +1,13 @@
 package com.example.shoppingmall.product;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor // 필드로 생성자 코드 구현
@@ -14,9 +18,15 @@ public class ProductService {
 //        this.productRepository = productRepository;
 //    }
 
+    @Autowired
+    ProductJPARepository productJPARepository;
+
+    @Transactional
     public Product registerProduct(Product product) {
         System.out.println("/products : service - " + product.getName());
-        return productRepository.save(product);
+        productJPARepository.save(product);
+
+        return productJPARepository.findById(product.getId()).orElseThrow(() -> new NoSuchElementException("Product not found with id: " + product.getId()));
     }
 
     public List<Product> findProducts(int limit, int currentPage) {
@@ -28,7 +38,8 @@ public class ProductService {
     }
 
     public Product findProduct(int id) {
-        return productRepository.findProduct(id);   // Controller로 돌려줘야 하니까 return
+
+        return productJPARepository.findById(id).orElseThrow(() -> new NoSuchElementException("Product not found with id: " + id));
     }
 
     public void deleteProduct(int id) {

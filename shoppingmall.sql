@@ -11,3 +11,12 @@ CREATE TABLE member (
     email VARCHAR(20) NOT NULL UNIQUE,
     contact VARCHAR(20) NOT NULL UNIQUE
 );
+
+
+CREATE TABLE product (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    category_id INT NOT NULL,
+    name VARCHAR(30) NOT NULL,
+    price INT NOT NULL,
+    description VARCHAR(100) NOT NULL
+);
