@@ -20,7 +20,6 @@ public class ProductService {
 //        this.productRepository = productRepository;
 //    }
 
-    @Autowired
     ProductJPARepository productJPARepository;
 
     @Transactional
@@ -32,7 +31,7 @@ public class ProductService {
     }
 
     public Product findProduct(int id) {
-        return productJPARepository.findById(id).orElseThrow(() -> new NoSuchElementException("Product not found with id: " + id));
+        return productJPARepository.findById(id).orElse(null); //orElseThrow(() -> new NoSuchElementException("Product not found with id: " + id));
     }
 
     public Page<Product> findProducts(int limit, int currentPage) {
@@ -45,8 +44,9 @@ public class ProductService {
         return productJPARepository.findProductsByCategoryId(categoryId, pageRequest);
     }
 
+    @Transactional
     public void deleteProduct(int id) {
-        productRepository.deleteProduct(id);
+        productJPARepository.deleteById(id);
     }
 
     public void deleteProducts(List<Integer> productIds) {
