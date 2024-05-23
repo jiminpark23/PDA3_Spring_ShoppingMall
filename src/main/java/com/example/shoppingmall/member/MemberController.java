@@ -6,6 +6,7 @@ import com.example.shoppingmall.utils.ApiUtils;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -25,10 +26,10 @@ import static com.example.shoppingmall.utils.ApiUtils.success;
 public class MemberController {
     MemberService memberService;
 
-    @PostMapping("/database")
-    public void makeConnection() {
-        memberService.makeConnection();
-    }
+//    @PostMapping("/database")
+//    public void makeConnection() {
+//        memberService.makeConnection();
+//    }
 
     @PostMapping("/join")
     public ApiUtils.ApiResult join(@Valid @RequestBody MemberDTO memberDTO) {  //, Errors errors) {
@@ -88,10 +89,12 @@ public class MemberController {
         }
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity login(@RequestBody Member member) {
-//        memberService.login(member.getUserId(), member.getPw());
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody Member member) {
+        if (memberService.login(member.getUserId(), member.getPw()) == null ) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -9,12 +9,12 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class MemberService {
-    MemberRepository memberRepository;
+//    MemberRepository memberRepository;
     MemberJPARepository memberJPARepository;
 
-    public void makeConnection() {
-        memberRepository.makeConnection();
-    }
+//    public void makeConnection() {
+//        memberRepository.makeConnection();
+//    }
 
     @Transactional
     public String join(Member member) {
@@ -33,18 +33,14 @@ public class MemberService {
             return true;
     }
 
-//    public Member login(String userId, String pw) {
-//        if (memberRepository.findById(userId) == null) {
-//            // 해당 id는 존재하지 않는 id
-//            return null;
-//        }
-//        if (!pw.equals(memberRepository.findById(userId).getPw())) {
-//            // 비밀번호 오류
-//            return null;
-//        }
-//
-//        return memberRepository.login(userId, pw);
-//    }
+    public Member login(String userId, String pw) {
+        Member existMember = memberJPARepository.findByUserId(userId).orElse(null);
 
+        if (existMember == null || !pw.equals(existMember.getPw())) {
+            return null;
+        }
+
+        return existMember;
+    }
 
 }
