@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class MemberService {
@@ -17,13 +19,13 @@ public class MemberService {
     @Transactional
     public String join(Member member) {
 
-        memberRepository.save(member);
+        memberJPARepository.save(member);
 
-        return memberRepository.findByUserId(member.getUserId()).getUserId();
+        return memberJPARepository.findByUserId(member.getUserId()).get().getUserId();
     }
 
     public boolean checkDuplicateId(String userId) {
-        Member existMember = memberRepository.findByUserId(userId);
+        Member existMember = memberJPARepository.findByUserId(userId).orElse(null);
 
         if (existMember == null)
             return false;
