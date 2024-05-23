@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor // 필드로 생성자 코드 구현
 public class ProductService {
-    ProductRepository productRepository;
+//    ProductRepository productRepository;
 
 //    ProductService(ProductRepository productRepository) {
 //        this.productRepository = productRepository;
@@ -49,7 +49,10 @@ public class ProductService {
         productJPARepository.deleteById(id);
     }
 
+    @Transactional
     public void deleteProducts(List<Integer> productIds) {
-        productRepository.deleteProducts(productIds);
+        productIds.forEach(productId -> {
+            productJPARepository.deleteById(productId);
+        });
     }
 }
