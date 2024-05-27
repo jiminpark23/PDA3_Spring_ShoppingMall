@@ -1,21 +1,12 @@
 package com.example.shoppingmall.member;
 
-import com.example.shoppingmall.order.Order;
-import com.example.shoppingmall.product.Product;
+import com.example.shoppingmall.exception.DuplicateMemberIdException;
 import com.example.shoppingmall.utils.ApiUtils;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.example.shoppingmall.utils.ApiUtils.error;
 import static com.example.shoppingmall.utils.ApiUtils.success;
@@ -90,11 +81,9 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody Member member) {
-        if (memberService.login(member.getUserId(), member.getPw()) == null ) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ApiUtils.ApiResult<String> login(@Valid @RequestBody MemberLoginReq memberLoginReq) {
+        String loginMemberName = memberService.login(memberLoginReq);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return success(loginMemberName);
     }
 }

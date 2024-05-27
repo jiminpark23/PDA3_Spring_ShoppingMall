@@ -1,5 +1,6 @@
 package com.example.shoppingmall.member;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
+@Primary
 public interface MemberJPARepository extends JpaRepository<Member, Integer>, MemberRepository {
     // extends 하고 있는 인터페이스의 기본 메소드는 그대로 사용하면 됨
     //                  -> hibernate

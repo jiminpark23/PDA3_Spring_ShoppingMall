@@ -1,6 +1,5 @@
 package com.example.shoppingmall.exception;
 
-import com.example.shoppingmall.member.DuplicateMemberIdException;
 import com.example.shoppingmall.utils.ApiUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -42,5 +41,13 @@ public class GlobalExceptionHandler {
         String errorMessage = error.getMessage();
 
         return error(errorMessage, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiUtils.ApiResult<String> handlePasswordNotValidException(PasswordNotValidException error) {
+        String errorMessage = error.getMessage();
+
+        return error(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }
