@@ -32,7 +32,7 @@ public class MemberController {
 //    }
 
     @PostMapping("/join")
-    public ApiUtils.ApiResult join(@Valid @RequestBody MemberDTO memberDTO) {  //, Errors errors) {
+    public ApiUtils.ApiResult<String> join(@Valid @RequestBody MemberDTO memberDTO) {  //, Errors errors) {
 
 //        if (errors.hasErrors()) {
 //            Map<String, String> errorMessages = new HashMap<>();
@@ -48,19 +48,16 @@ public class MemberController {
 //        }
 
         // 유효성 검사는 아님 - 검증
-        if(isDuplicateId(memberDTO))
+        if(isDuplicateId(memberDTO.getUserId()))
             return error("아이디 중복", HttpStatus.CONFLICT);
 
         // 생성자 이용한 변환
-        Member requestMember = memberDTO.convertToEntity();
+//        Member requestMember = memberDTO.convertToEntity();
 
-        String userId = memberService.join(requestMember);
+        String userId = memberService.join(memberDTO);
         return success(userId);
     }
 
-    private boolean isDuplicateId(MemberDTO memberDTO) {
-        return memberService.checkDuplicateId(memberDTO.getUserId());
-    }
 
 //    // 유효성 검사하다가 에러가 터지면 호출되는 예외 처리 메소드
 //    @ExceptionHandler//(MethodArgumentNotValidException.class)
@@ -78,15 +75,18 @@ public class MemberController {
 //        return error(errorMessages, HttpStatus.BAD_REQUEST);
 //    }
 
-    @PostMapping("/check")
-    public ResponseEntity<String> checkDuplicateId(@RequestBody Member member) {
-        boolean isExist = memberService.checkDuplicateId(member.getUserId());
-
-        if (isExist) {
-            return new ResponseEntity<>(HttpStatus.OK);
+    // 아이디 중복 확인
+    @PostMapping("/members/check")
+    public ApiUtils.ApiResult<String> checkUsableId(@RequestBody String userId) throws DuplicateMemberIdException {
+        if (isDuplicateId(userId)) {
+            throw new DuplicateMemberIdException("이미 사용중인 아이디입니다.");
         } else {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return success("사용 가능한 아이디입니다.");
         }
+    }
+
+    private boolean isDuplicateId(String userId) {
+        return memberService.checkDuplicateId(userId);
     }
 
     @PostMapping("/login")

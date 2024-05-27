@@ -21,13 +21,14 @@ public class OrderController {
     @PostMapping("/orders")
     public ResponseEntity orderProduct(@RequestBody OrderDTO orderDTO) {
         // DTO를 바로 service에게 주느냐 마느냐는 결정해야 함
-        Product orderedProduct = productService.findProduct(orderDTO.getProductId());
+//        Product orderedProduct = productService.findProduct(orderDTO.getProductId());
 
         // TODO : Service로 이사갈 거예요. DTO -> Entity
         // 생성자 이용한 변환
-        Order requestOrder = new Order(
-                orderedProduct, orderDTO.getCount()
-        );
+//        Order requestOrder = new Order(
+//                orderedProduct, orderDTO.getCount()
+//        );
+        Order requestOrder = orderService.convertToEntity(orderDTO);
 
         orderService.orderProduct(requestOrder);
 

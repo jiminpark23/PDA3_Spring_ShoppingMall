@@ -20,3 +20,11 @@ CREATE TABLE product (
     price INT NOT NULL,
     description VARCHAR(100) NOT NULL
 );
+
+
+CREATE TABLE `order` (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    product_id INT NOT NULL,
+    count INT NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
+);

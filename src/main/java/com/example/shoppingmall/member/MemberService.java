@@ -9,23 +9,24 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class MemberService {
-//    MemberRepository memberRepository;
-    MemberJPARepository memberJPARepository;
+//    MemberJPARepository memberJPARepository;
+    MemberRepository memberRepository;
 
 //    public void makeConnection() {
 //        memberRepository.makeConnection();
 //    }
 
     @Transactional
-    public String join(Member member) {
+    public String join(MemberDTO memberDTO) {
+        Member requestMember = memberDTO.convertToEntity();
 
-        memberJPARepository.save(member);
-
-        return memberJPARepository.findByUserId(member.getUserId()).get().getUserId();
+        Member joinedMember = memberRepository.save(requestMember);
+        return joinedMember.getUserId();
+//        return memberRepository.findByUserId(requestMember.getUserId()).get().getUserId();
     }
 
     public boolean checkDuplicateId(String userId) {
-        Member existMember = memberJPARepository.findByUserId(userId).orElse(null);
+        Member existMember = memberRepository.findByUserId(userId).orElse(null);
 
         if (existMember == null)
             return false;
@@ -34,7 +35,7 @@ public class MemberService {
     }
 
     public Member login(String userId, String pw) {
-        Member existMember = memberJPARepository.findByUserId(userId).orElse(null);
+        Member existMember = memberRepository.findByUserId(userId).orElse(null);
 
         if (existMember == null || !pw.equals(existMember.getPw())) {
             return null;

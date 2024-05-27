@@ -1,5 +1,6 @@
 package com.example.shoppingmall.exception;
 
+import com.example.shoppingmall.member.DuplicateMemberIdException;
 import com.example.shoppingmall.utils.ApiUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,13 @@ public class GlobalExceptionHandler {
         log.info("errorMessage = {}", errorMessages);
 
         return error(errorMessages, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiUtils.ApiResult<String> handleDuplicateMemberIdException(DuplicateMemberIdException error) {
+        String errorMessage = error.getMessage();
+
+        return error(errorMessage, HttpStatus.CONFLICT);
     }
 }
